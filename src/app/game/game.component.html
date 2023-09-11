@@ -1,1 +1,7 @@
-<p>game works!</p>
+<div class="field">
+    <div class="card-stack">
+        <img [ngStyle]="{'right.px': i * 5}" *ngFor="let c of [0,1,2,3,4]; let i = index;" src="../../assets/img/Cards/card_cover.png" alt="">
+        <img (click)="takeCard()" class="top-card" style="right: 25px;" src="../../assets/img/Cards/card_cover.png" alt="">
+        <img (click)="takeCard()" *ngIf="pickCardAnimation" [class.pick-card]="pickCardAnimation" class="pick-card" style="right: 25px;" src="../../assets/img/Cards/spade_1.png" alt="">
+    </div>
+</div>
