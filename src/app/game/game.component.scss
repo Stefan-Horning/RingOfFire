@@ -31,7 +31,12 @@
 
 .pick-card{
     transition: all 225ms ease-in-out;
-    animation: pick-card-animation 1.3s ease-in-out;
+    animation: pick-card-animation 1.1s ease-in-out;
+    
+}
+
+.played-card{
+    right: 25px;
     transform: scale(1.1) translateX(210px) translateY(-180px) rotate(15deg);
 }
 
