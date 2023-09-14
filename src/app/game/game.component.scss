@@ -30,8 +30,8 @@
 }
 
 .pick-card{
-    transition: all 225ms ease-in-out;
-    animation: pick-card-animation 1.1s ease-in-out;
+    transition: all 225ms linear;
+    animation: pick-card-animation 1.15s linear;
     
 }
 
