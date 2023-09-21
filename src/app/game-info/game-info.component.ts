@@ -34,6 +34,5 @@ export class GameInfoComponent implements OnChanges{
       this.title = this.cardAction[currentNumber]['title'];
       this.description = this.cardAction[currentNumber]['description'];
     }
-    
   }
 }
