@@ -15,6 +15,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
 import {MatInputModule} from '@angular/material/input';
 import { GameInfoComponent } from './game-info/game-info.component';
+import {MatCardModule} from '@angular/material/card';
 
 
 @NgModule({
@@ -36,6 +37,7 @@ import { GameInfoComponent } from './game-info/game-info.component';
     MatFormFieldModule,
     FormsModule,
     MatInputModule,
+    MatCardModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

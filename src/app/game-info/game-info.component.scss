@@ -1,0 +1,18 @@
+.card{
+    position: absolute;
+    bottom: 30px;
+    left: 50px;
+    width: 300px;
+    padding: 8px;
+}
+
+.title{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+    font-size: 22px;
+}
+
+.text{
+    text-align: center;
+}
