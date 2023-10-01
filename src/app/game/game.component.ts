@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Game } from 'src/models/game';
+import { Injectable } from '@angular/core';
+import { inject } from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import { DialogAddPlayerComponent } from '../dialog-add-player/dialog-add-player.component';
+import { Firestore,getFirestore, query, where, collection, collectionData, onSnapshot,addDoc,doc, updateDoc, deleteDoc, limit, orderBy } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-game',
@@ -12,14 +15,47 @@ export class GameComponent implements OnInit{
   pickCardAnimation = false;
   game: Game = new Game();
   currentCard:string = "";
-  
+  firestore: Firestore = inject(Firestore);
+  subGames = [];
   animal: string;
   name: string;
+
+  unsubGames;
 
   constructor(public dialog: MatDialog) {}
 
   ngOnInit(): void {  
     this.newGame();
+    this.unsubGames = this.subGamesList();
+    const docRef = doc(collection(this.firestore, "games") ,)
+  }
+
+  ngDestroy(){
+    this.unsubGames();
+  }
+
+  subGamesList(){
+    return onSnapshot(this.getGameRef(), (list) =>{
+      this.subGames = [];
+      list.forEach(element => {
+        this.subGames.push(this.setGameObject(element.data(), element.id));
+      });
+    })
+  }
+
+  setGameObject(obj:any ,id:string){
+    return {
+      id:id,
+      layers: obj.layers || "",
+      stack: obj.stack || "",
+      playerCard: obj.playerCard || "",
+      currentPlayer: obj.currentCard || "",
+    }
+
+  }
+
+  getGameRef(){
+    return collection(this.firestore, "games");
   }
 
   newGame(){
