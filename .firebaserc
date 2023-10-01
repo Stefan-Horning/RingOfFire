@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "ringoffire-1e058": {
+      "hosting": {
+        "ringoffire": [
+          "ringoffire-1e058"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "ringoffire-1e058"
+  }
+}
