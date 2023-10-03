@@ -6,6 +6,7 @@ import {MatDialog} from '@angular/material/dialog';
 import { DialogAddPlayerComponent } from '../dialog-add-player/dialog-add-player.component';
 import { Firestore,getFirestore, query, where, collection, collectionData, onSnapshot,addDoc,doc, updateDoc, deleteDoc, limit, orderBy } from '@angular/fire/firestore';
 import { ActivatedRoute } from '@angular/router';
+import { getDoc } from "firebase/firestore";
 
 @Component({
   selector: 'app-game',
@@ -28,13 +29,14 @@ export class GameComponent implements OnInit{
   ngOnInit(): void {  
     this.route.params.subscribe((params) =>{
       console.log(params['id']);
+      this.getGame(params['id']);
     });
     this.unsubGames = this.subGamesList();
     //this.newGame();
   }
 
   ngDestroy(){
-    this.unsubGames();
+    this.subGamesList();
   }
 
   subGamesList(){
@@ -42,9 +44,16 @@ export class GameComponent implements OnInit{
       this.subGames = [];
       list.forEach(element => {
         this.subGames.push(this.setGameObject(element.data(), element.id));
-        console.log(this.subGames);
       });
+
     })
+  }
+
+  async getGame(id:string){
+    let getRef = this.getsingelDocRef('games',id);
+    const docSnap = await getDoc(getRef);
+    
+    console.log(docSnap);
   }
 
   setGameObject(obj:any, id:string):Game{
