@@ -42,6 +42,7 @@ export class GameComponent implements OnInit{
       this.subGames = [];
       list.forEach(element => {
         this.subGames.push(this.setGameObject(element.data(), element.id));
+        console.log(this.subGames);
       });
     })
   }
