@@ -25,31 +25,32 @@ export class GameComponent implements OnInit{
   constructor(public dialog: MatDialog) {}
 
   ngOnInit(): void {  
+    //this.subGamesList();
     this.newGame();
-    this.unsubGames = this.subGamesList();
-    const docRef = doc(collection(this.firestore, "games") ,)
   }
 
   ngDestroy(){
     this.unsubGames();
   }
 
+  getIDFromGame;
+
   subGamesList(){
     return onSnapshot(this.getGameRef(), (list) =>{
       this.subGames = [];
       list.forEach(element => {
-        this.subGames.push(this.setGameObject(element.data(), element.id));
+        this.subGames.push(this.setGameObject(element.data()));
       });
+      console.log(this.subGames);
     })
   }
 
-  setGameObject(obj:any ,id:string){
+  setGameObject(obj:any):Game{
     return {
-      id:id,
-      layers: obj.layers || "",
-      stack: obj.stack || "",
-      playerCard: obj.playerCard || "",
-      currentPlayer: obj.currentCard || "",
+      players: obj.players || [],
+      stack: obj.stack || [],
+      playerCard: obj.playerCard || [],
+      currentPlayer: obj.currentPlayer || "",
     }
 
   }
@@ -58,11 +59,23 @@ export class GameComponent implements OnInit{
     return collection(this.firestore, "games");
   }
 
-  newGame(){
+  async newGame(){
     this.game = new Game();
     console.log(this.game);
+    let calId = "games";
+    let item = this.setGameObject(this.game);
+    this.addNewGame(item,calId);
   }
 
+  async addNewGame(item: Game, calId:string){
+    await addDoc(this.getGamesRef(calId), item).catch(
+      (err) => { console.log(err) }
+    );
+  }
+
+  getGamesRef(calId:string){
+    return collection(this.firestore, calId);
+  }
   takeCard(){
     if(!this.pickCardAnimation){
       this.currentCard = this.game.stack.pop();
