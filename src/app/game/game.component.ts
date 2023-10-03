@@ -5,6 +5,7 @@ import { inject } from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import { DialogAddPlayerComponent } from '../dialog-add-player/dialog-add-player.component';
 import { Firestore,getFirestore, query, where, collection, collectionData, onSnapshot,addDoc,doc, updateDoc, deleteDoc, limit, orderBy } from '@angular/fire/firestore';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-game',
@@ -22,37 +23,60 @@ export class GameComponent implements OnInit{
 
   unsubGames;
 
-  constructor(public dialog: MatDialog) {}
+  constructor(private route: ActivatedRoute,public dialog: MatDialog) {}
 
   ngOnInit(): void {  
-    //this.subGamesList();
-    this.newGame();
+    this.route.params.subscribe((params) =>{
+      console.log(params['id']);
+    });
+    this.unsubGames = this.subGamesList();
+    //this.newGame();
   }
 
   ngDestroy(){
     this.unsubGames();
   }
 
-  getIDFromGame;
-
   subGamesList(){
     return onSnapshot(this.getGameRef(), (list) =>{
       this.subGames = [];
       list.forEach(element => {
-        this.subGames.push(this.setGameObject(element.data()));
+        this.subGames.push(this.setGameObject(element.data(), element.id));
       });
-      console.log(this.subGames);
     })
   }
 
-  setGameObject(obj:any):Game{
+  setGameObject(obj:any, id:string):Game{
     return {
+      id: id, 
       players: obj.players || [],
       stack: obj.stack || [],
       playerCard: obj.playerCard || [],
       currentPlayer: obj.currentPlayer || "",
     }
 
+  }
+
+  async updateGame(game: Game ){
+    if(game.id){
+      let docRef = this.getsingelDocRef("games",game.id);
+      await updateDoc(docRef, this.getCleanJson(game)).catch(
+        (err) => { console.log(err); }
+      );
+    }
+  }
+
+  getCleanJson(game :Game): {} {
+    return {
+      players: game.players,
+      stack: game.stack,
+      playerCard: game.playerCard,
+      currentPlayer: game.currentPlayer,
+    }
+  }
+
+  getsingelDocRef(colId:string, docId:string){
+    return doc(collection(this.firestore, colId) ,docId)
   }
 
   getGameRef(){
@@ -63,7 +87,7 @@ export class GameComponent implements OnInit{
     this.game = new Game();
     console.log(this.game);
     let calId = "games";
-    let item = this.setGameObject(this.game);
+    let item = this.setGameObject(this.game, this.game.id);
     this.addNewGame(item,calId);
   }
 
