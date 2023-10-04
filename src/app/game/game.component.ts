@@ -51,8 +51,8 @@ export class GameComponent implements OnInit{
 
   async getGame(id:string){
     let getRef = this.getsingelDocRef('games',id);
+    //const docSnap = (await getDoc(getRef)).data();
     const docSnap = await getDoc(getRef);
-    
     console.log(docSnap);
   }
 
