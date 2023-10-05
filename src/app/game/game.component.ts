@@ -19,7 +19,7 @@ export class GameComponent implements OnInit{
 
   firestore: Firestore = inject(Firestore);
   subGames = [];
-  animal: string;
+  animal:string;
   name: string;
   id:string;
 
@@ -64,6 +64,8 @@ export class GameComponent implements OnInit{
     this.game.playerCard = docSnap['playerCard'];
     this.game.players = docSnap['players'];
     this.game.stack = docSnap['stack'];
+    this.game.currentCard = docSnap['currentCard'];
+    this.game.pickCardAnimation = docSnap['pickCardAnimation'];
     console.log(docSnap);
   }
 
@@ -97,6 +99,8 @@ export class GameComponent implements OnInit{
       stack: game.stack,
       playerCard: game.playerCard,
       currentPlayer: game.currentPlayer || 0,
+      pickCardAnimation: game.pickCardAnimation,
+      currentCard: game.currentCard,
     }
   }
 
