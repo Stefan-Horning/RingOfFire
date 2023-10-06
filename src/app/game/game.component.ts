@@ -153,6 +153,10 @@ export class GameComponent implements OnInit{
     
   }
 
+  preloadNextCard(){
+    new Image
+  }
+
   editProfile(i: number){
     console.log(i);
     const dialogRef = this.dialog.open(EditPlayerComponent);

@@ -31,3 +31,5 @@
 <button *ngIf="!gameOver" (click)="openDialog()" mat-fab color="primary" aria-label="Example icon button with a delete icon" class="btn-add">
     <mat-icon>add</mat-icon>
 </button>
+
+<img class="preloadImage" src="assets/img/Cards/{{game.stack[game.stack.length -1 ]}}.png" alt="">
