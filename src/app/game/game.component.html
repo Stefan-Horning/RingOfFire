@@ -1,6 +1,6 @@
 
 
-<app-player  (click)="editProfile(i);" *ngFor="let player of game.players; let i = index" [ngStyle]="{'top.px': 50 + (i * 100)}" [image]="game.images[i]" [playerActiv]="i == game.currentPlayer" [name]="player" class="player-position hide-mobile" ></app-player>
+<app-player (click)="editProfile(i);" *ngFor="let player of game.players; let i = index" [ngStyle]="{'top.px': 50 + (i * 100)}" [image]="game.images[i]" [playerActiv]="i == game.currentPlayer" [name]="player" class="player-position hide-mobile" ></app-player>
 
 
 <div class="scroll-container hide-destop">

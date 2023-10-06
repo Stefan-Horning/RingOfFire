@@ -104,3 +104,8 @@ app-player-mobile {
     overflow: hidden;
 
 }
+
+.preloadImage{
+    opacity: 0;
+    z-index: -9999;
+}
