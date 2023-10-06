@@ -42,6 +42,7 @@ export class StartScreenComponent implements OnInit{
 
   setGameObject(obj:any, id:string):Game{
     return {
+      images: obj.images,
       id: id, 
       players: obj.players || [],
       stack: obj.stack || [],
